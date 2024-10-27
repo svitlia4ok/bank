@@ -228,36 +228,3 @@ def getMetricsData(model, inputs_train, targets_train, inputs_val, targets_val, 
     print("Val roc_auc_score={}".format(roc_auc_score(targets_val[column], targets_val_pred)))
     print("Val f1={}".format(f1_score(targets_val[column], targets_val_pred)))
     return model
-
-        df: pd.DataFrame, 
-        scalerObj: BaseEstimator, 
-        encoderObj: BaseEstimator, 
-        number_cols: List[str], 
-        number_cols_to_scale: List[str],
-        categorical_cols: List[str],
-        scaleNumeric: bool = True
-    ) -> pd.DataFrame:
-    """
-    Попередньо обробляє нові дані з використанням існуючих об'єктів скейлера і енкодера.
-
-    Args:
-        df (pd.DataFrame): Вхідний DataFrame з новими даними.
-        scalerObj (BaseEstimator): Існуючий об'єкт скейлера.
-        encoderObj (BaseEstimator): Існуючий об'єкт енкодера.
-        number_cols (list): Список числових колонок.
-        number_cols_to_scale (list): Список числових колонок для масштабування.
-        categorical_cols (list): Список категоріальних колонок для кодування.
-        scaleNumeric (bool): Вказує, чи потрібно масштабувати числові колонки.
-
-    Returns:
-        pd.DataFrame: Попередньо оброблений DataFrame з новими даними.
-    """
-    if scaleNumeric:
-        df[number_cols_to_scale] = scalerObj.transform(df[number_cols_to_scale])
-    
-    categories_encoded_cols = encoderObj.get_feature_names_out().tolist()
-    df[categories_encoded_cols] = encoderObj.transform(df[categorical_cols])
-    
-    df = df[number_cols + categories_encoded_cols]
-    
-    return df
