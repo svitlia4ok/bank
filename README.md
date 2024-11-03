@@ -1,4 +1,4 @@
-Welcome to the Mid-term Project!
+Welcome to the Bank prediction Project!
 
 Main Objective
 
